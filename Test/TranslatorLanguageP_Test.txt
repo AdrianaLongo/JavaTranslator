@@ -1,0 +1,32 @@
+/*(do
+	(read a_1)
+	(read b_2)
+	(while (<> a_1 b_2) 
+		(cond (> a_1 b_2) (= a_1 (- a_1 b_2)) (else (= b_2 (- b_2 a_1))))  
+	)
+	(print a_1 b_2 1000)
+	(print (+ a_1 b_2 100))
+) 
+// comment
+*/
+
+/* commento */
+(do
+    (read x)
+    (read y)
+    (print (* x x x) y)
+    (while (> y 0)
+        (cond (> x 5)
+            (do
+                (= y (- y 1))
+                (print y)
+            )    
+            (else
+                (do
+                    (= y (- y x))
+                    (print y)
+                )
+            )
+        )    
+    )    
+)

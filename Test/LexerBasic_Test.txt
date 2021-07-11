@@ -1,0 +1,9 @@
+prima(prima
+seconda( seconda
+terza (terza
+quarta ( quarta
+
+d = 300;
+print(* d t)
+cond when(> x y) then (= x 0) else (= y 0)
+while (conds<=printread) do conds = conds+1

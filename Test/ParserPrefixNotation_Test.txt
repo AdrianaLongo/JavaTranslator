@@ -1,0 +1,14 @@
+// (= var 3) // OK
+// (print 3) // OK
+// (cond(< 5 2)(read var)) // OK
+// (cond(> my_var 3)(= var 3)) // OK
+// (cond(<> 5 my_var)(print my_var)) // OK
+// (cond(> my_var 3)(do(= my_var_b (+ 2 8)))) // OK
+// (cond(> my_var 3)(do(= my_var_b (/ 2 8)))) // OK
+// (while(< 5 (+ 4 2)) (do (= my_var (* 2 8)))) // OK
+// (do (=x 9) (while ( < x 21) (do (= x (+ x 3))))(print x)) // OK
+// (while(< 5 (+ 4 2))(do(= my_var 5)(cond (> my_var 3) (print my_var) (else (= var_b 123))))) // OK
+// (while(< 3 5)(do(read id)(cond(< 5 2)(print 5)))) // OK
+// (while(< 5 (+ 4 2))(do(= my_var 5)(cond (> my_var 3) (print my_var)))) // OK
+// (while(< 3 5)(do(= my_var 5))) // OK
+

@@ -1,0 +1,32 @@
+<prog> -> {prog.next = newLabel} <stat> {emitLabel(prog.next)} EOF
+<statlist> -> {statlist.next = newLabel} <stat> {emitLabel(statlist.next); statlistp.next = statlist.next} <statlistp>
+<statlistp> -> {stat.next = newLabel }<stat> {emitlabel(stat.next)} <statlistp> | eps
+<stat> -> ( {statp.next = stat.next} <statp>)
+
+<statp> -> =ID {emit(istore(address(ID.lexeme)))} {emit("=")} <expr>
+     | cond {bexpr.true = newLabel; bexpr.false = newLabel} <bexpr> {emitLabel bexpr.true; statp1.next = statp.next} <stat> <elseopt> {emitLabel(bexpr.false)} bexprlist.next = statp.next;
+     | while {begin = newLabel(); bexpr.true = newLabel; bexpr.false = newLabel} <bexpr> {emitlabel(bexpr.true); stat.next = begin} <stat> {emit("go to" stat.next);
+ 	 | do {statlist.next = statlistp.next} <statlist>
+ 	 | print {emit("print")} {statlist.next = statlistp.next}  <exprlist>
+ 	 | read {emit("read")} ID {emit(istore(addr(id.lexeme)))}
+
+
+ <elseopt> -> ( else {emit("else")} <stat> ) | eps
+ 
+ <bexpr> ->( {bexprp.true = bexpr.true} {bexpr.false = bexpr.false} <bexprp>)
+ 
+ <bexprp> -> RELOP <expr> <expr> {emit(relop.true)}{emit(relop.false)}
+
+ <expr> -> NUM {emit(istore(ldc(num.lexeme)))} 
+         | ID {emit(istore(address(ID.lexeme)))}
+         | {exprp.next = e.next}(<exprp>)
+ 
+ <exprp> -> {exprlist.next = er.next } + {exprlist.optype = "plus" <exprlist> 
+ 
+            | - <expr> {emit(isub)} <expr>
+            | {exprlist.next = er.next} * {exprlist.optype = "mult" <exprlist> 
+            | / <expr> {emit(idiv)} <expr>
+ 
+ <exprlist> -> {exprilist.code = E.code} <expr> <exprlistp> {exprlistp.code = exprlist.code}
+ 
+ <exprlistp> -> {exprilistp.code = E.code} <expr> {exprlistp1.code = exprlistp.code} <exprlistp> | eps
